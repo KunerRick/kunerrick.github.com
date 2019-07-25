@@ -3,20 +3,20 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
+title: 小小的绿萝
+subtitle: 
 description:
 keywords:
-author: John Doe
-language:
+author: Kuner Rick
+language: zh-Hans
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
-root: /
-permalink: :year/:month/:day/:title/
-permalink_defaults:
+# url: http://yoursite.com
+# root: /
+# permalink: :year/:month/:day/:title/
+# permalink_defaults:
 
 # Directory
 source_dir: source
@@ -73,7 +73,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+# theme: landscape
+theme: next
+
+# theme 'next' config
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -81,3 +85,5 @@ deploy:
   type: git
   repo: https://github.com/KunerRick/kunerrick.github.com
   branch: master
+
+
