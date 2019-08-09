@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="日学习总结（持续更新）2019-07-26代理代理，顾名思义，代为处理，因此根据所代表的对象不同，分为了正向代理和反向代理。  正向代理：代理服务器代表客户去已知的服务端（根据地址）请求数据，服务端只认识代理服务器，不认识客户端。 反向代理：代理服务器代表服务端返回数据给客户端，客户端只认识代理服务器，不认识服务端。">
+<meta name="description" content="日学习总结（持续更新）2019-07-26代理代理，顾名思义，代为处理，因此根据所代表的对象不同，分为了正向代理和反向代理。  正向代理：代理服务器代表客户去已知的服务端（根据地址）请求数据，服务端只认识代理服务器，不认识客户端。 反向代理：代理服务器代表服务端返回数据给客户端，客户端只认识代理服务器，不认识服务端。  2019/8/7EChart，外包 div 大小变化时，图表大小不变原因 1：">
 <meta name="keywords" content="学习,工作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习总结">
 <meta property="og:url" content="http://yoursite.com/2019/07/26/学习总结/index.html">
 <meta property="og:site_name" content="小小的绿萝">
-<meta property="og:description" content="日学习总结（持续更新）2019-07-26代理代理，顾名思义，代为处理，因此根据所代表的对象不同，分为了正向代理和反向代理。  正向代理：代理服务器代表客户去已知的服务端（根据地址）请求数据，服务端只认识代理服务器，不认识客户端。 反向代理：代理服务器代表服务端返回数据给客户端，客户端只认识代理服务器，不认识服务端。">
+<meta property="og:description" content="日学习总结（持续更新）2019-07-26代理代理，顾名思义，代为处理，因此根据所代表的对象不同，分为了正向代理和反向代理。  正向代理：代理服务器代表客户去已知的服务端（根据地址）请求数据，服务端只认识代理服务器，不认识客户端。 反向代理：代理服务器代表服务端返回数据给客户端，客户端只认识代理服务器，不认识服务端。  2019/8/7EChart，外包 div 大小变化时，图表大小不变原因 1：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-26T03:27:21.847Z">
+<meta property="og:updated_time" content="2019-08-09T09:56:13.093Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结">
-<meta name="twitter:description" content="日学习总结（持续更新）2019-07-26代理代理，顾名思义，代为处理，因此根据所代表的对象不同，分为了正向代理和反向代理。  正向代理：代理服务器代表客户去已知的服务端（根据地址）请求数据，服务端只认识代理服务器，不认识客户端。 反向代理：代理服务器代表服务端返回数据给客户端，客户端只认识代理服务器，不认识服务端。">
+<meta name="twitter:description" content="日学习总结（持续更新）2019-07-26代理代理，顾名思义，代为处理，因此根据所代表的对象不同，分为了正向代理和反向代理。  正向代理：代理服务器代表客户去已知的服务端（根据地址）请求数据，服务端只认识代理服务器，不认识客户端。 反向代理：代理服务器代表服务端返回数据给客户端，客户端只认识代理服务器，不认识服务端。  2019/8/7EChart，外包 div 大小变化时，图表大小不变原因 1：">
 
 
 
@@ -335,6 +335,20 @@
 <li>正向代理：代理服务器代表客户去已知的服务端（根据地址）请求数据，服务端只认识代理服务器，不认识客户端。</li>
 <li>反向代理：代理服务器代表服务端返回数据给客户端，客户端只认识代理服务器，不认识服务端。</li>
 </ul>
+<h2 id="2019-8-7"><a href="#2019-8-7" class="headerlink" title="2019/8/7"></a>2019/8/7</h2><h3 id="EChart，外包-div-大小变化时，图表大小不变"><a href="#EChart，外包-div-大小变化时，图表大小不变" class="headerlink" title="EChart，外包 div 大小变化时，图表大小不变"></a>EChart，外包 div 大小变化时，图表大小不变</h3><p>原因 1： 可能是在外层 div 改变时就立即调用 resize，出于 dom 的更新机制，将不进行重绘<br>解决办法：采用异步调用，如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$store.dispatch(<span class="string">'regSizeChangeEvent'</span>, &#123;</span><br><span class="line">  name: <span class="string">'pieResize'</span>,</span><br><span class="line">  method: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.chart) &#123;</span><br><span class="line">      <span class="comment">// 一定要异步执行，不然不会重绘</span></span><br><span class="line">      setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.chart.resize()</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>原因 2: 在调用 resize()之前，需要重新 setOption()</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.chart.setOption(<span class="keyword">this</span>.options)</span><br><span class="line"><span class="keyword">this</span>.chart.resize()</span><br></pre></td></tr></table></figure>
+
+<h2 id="2019-8-9"><a href="#2019-8-9" class="headerlink" title="2019/8/9"></a>2019/8/9</h2><h3 id="【EChart-切换不显示数据的问题】"><a href="#【EChart-切换不显示数据的问题】" class="headerlink" title="【EChart 切换不显示数据的问题】"></a>【EChart 切换不显示数据的问题】</h3><p>问题描述： 在 Vue 组件中，使用<code>v-if</code>来控制图表的切换，图表切换之后不显示数据</p>
+<p>解决办法：网上说在组件的 update 中 setOption,赋值数据，但自己使用时，因进行了一层封装，每次切换组件都会销毁和重新创建，最后发现是 EChart 所依托的 DOM 节点获取不正确（多半是因为有相同 ref 属性的节点，导致每次获取失败或者获取不正确），后直接将封装的组件里的<code>div</code>作为图表初始化所需的 DOM 节点，交互便正常了</p>
+<h3 id="【远程连接以及一些命令】"><a href="#【远程连接以及一些命令】" class="headerlink" title="【远程连接以及一些命令】"></a>【远程连接以及一些命令】</h3><p>远程连接工具 X-shell：使用 shell 命令操作远程的机器，非常好用，很有 linux 的特色</p>
+<ul>
+<li>一些指令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 排除文件a的删除，多文件用|隔开</span><br><span class="line">rm -rf !(a [|b|c])</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 如果删除提示</span><br><span class="line">-bash: !: event not found</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>则执行这一句，含义为 打开扩展的模式匹配特征</span><br><span class="line">shopt -s extglob</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -503,7 +517,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#日学习总结（持续更新）"><span class="nav-number">1.</span> <span class="nav-text">日学习总结（持续更新）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-07-26"><span class="nav-number">1.1.</span> <span class="nav-text">2019-07-26</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代理"><span class="nav-number">1.1.1.</span> <span class="nav-text">代理</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#日学习总结（持续更新）"><span class="nav-number">1.</span> <span class="nav-text">日学习总结（持续更新）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-07-26"><span class="nav-number">1.1.</span> <span class="nav-text">2019-07-26</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代理"><span class="nav-number">1.1.1.</span> <span class="nav-text">代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-8-7"><span class="nav-number">1.2.</span> <span class="nav-text">2019/8/7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EChart，外包-div-大小变化时，图表大小不变"><span class="nav-number">1.2.1.</span> <span class="nav-text">EChart，外包 div 大小变化时，图表大小不变</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-8-9"><span class="nav-number">1.3.</span> <span class="nav-text">2019/8/9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#【EChart-切换不显示数据的问题】"><span class="nav-number">1.3.1.</span> <span class="nav-text">【EChart 切换不显示数据的问题】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【远程连接以及一些命令】"><span class="nav-number">1.3.2.</span> <span class="nav-text">【远程连接以及一些命令】</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
